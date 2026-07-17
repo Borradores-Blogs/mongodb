@@ -3,31 +3,19 @@ from pymongo import MongoClient
 import numpy as np
 
 # ======================================
-# CONFIG
-# ======================================
-MONGO_URI = "mongodb://localhost:27017"
-DB_NAME = "restaurants_db"
-COLLECTION_NAME = "restaurants"
-CSV_PATH = r"C:\Users\arman\OneDrive\Documentos\Proyectos de programacion\Proyectos sin haberse publicado\ML-DL-SQL-MongoDB\508 MongoDB\data\restaurants.csv"
-
-# ======================================
 # CONEXIÓN
 # ======================================
 client = MongoClient(MONGO_URI)
 db = client[DB_NAME]
 collection = db[COLLECTION_NAME]
 
-# ======================================
 # LOAD DATA
-# ======================================
 print("\n📥 Cargando CSV...")
 df = pd.read_csv(CSV_PATH)
 
 print(f"Filas originales: {len(df)}")
 
-# ======================================
 # DATA CLEANING
-# ======================================
 print("\n🧹 Data Cleaning...")
 
 def clean_data(df):

@@ -52,45 +52,6 @@ printjson(db.restaurants.createIndex({ category: 1, score: -1 }))
 
 print("✅ Indexes created")
 
-// ======================================
-// STRUCTURE VALIDATION (PRO)
-// ======================================
-print("\n🧪 Validating document structure (schema check)...")
-
-// Saves the result (the total number of documents in the collection) in the constant totalDocs.
-const totalDocs = db.restaurants.countDocuments()
-
-if (totalDocs === 0) {
-  print("⚠️ No data in the collection")
-} else {
-
-  // The result (the number of invalid documents) is stored in the `invalidDocs` constant.
-  // `$or` means that if either condition is true, the document is considered invalid.
-  // { name: { $exists: false } } → The `name` field does not exist.
-  const invalidDocs = db.restaurants.countDocuments({
-    $or: [
-      { name: { $exists: false } },
-      { category: { $exists: false } },
-      { address: { $exists: false } },
-      { location: { $exists: false } }
-    ]
-  })
-
-  if (invalidDocs > 0) {
-    // Backticks `...` Indicate a template literal in JavaScript. They allow you to write strings that can include variables or expressions within ${...}.
-    // ${invalidDocs} Inserts the value of the variable `invalidDocs` into the string.
-    print(`⚠️ Documents with invalid structure: ${invalidDocs}`)
-  } else {
-    print("✅ All documents have a valid structure")
-  }
-}
-
-// ======================================
-// SUMMARY
-// ======================================
-print("\n📊 Summary:")
-print("Total documents:", db.restaurants.countDocuments())
-
 print("\n======================================")
 print("🚀 SETUP COMPLETED")
 print("======================================\n")

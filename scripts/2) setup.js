@@ -1,7 +1,3 @@
-print("\n======================================")
-print("⚙️ AUTOMATIC DATABASE SETUP")
-print("======================================\n")
-
 // ======================================
 // CREATE COLLECTION
 // ======================================
@@ -51,7 +47,3 @@ print("\n📌 Index: compound (category + score)")
 printjson(db.restaurants.createIndex({ category: 1, score: -1 }))
 
 print("✅ Indexes created")
-
-print("\n======================================")
-print("🚀 SETUP COMPLETED")
-print("======================================\n")

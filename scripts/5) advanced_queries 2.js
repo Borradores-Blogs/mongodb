@@ -22,21 +22,3 @@ db.restaurants.find(
   { name: 1, score: 1, ratings: 1 }
 )
 .forEach(printjson)
-
-
-print("\n==============================")
-print("1️⃣3️⃣ Count of restaurants by category")
-print("=============================\n")
-
-printjson(
-  db.restaurants.aggregate([
-    { $unwind: "$category" }, // ✅ FIX
-    {
-      $group: {
-        _id: "$category",
-        total_restaurants: { $sum: 1 }
-      }
-    },
-    { $sort: { total_restaurants: -1 } }
-  ]).toArray()
-)

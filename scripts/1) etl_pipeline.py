@@ -104,38 +104,3 @@ def engineer_features(df):
     return df
 
 df = engineer_features(df)
-
-# ======================================
-# CONVERT TO JSON
-# ======================================
-# The `df.to_dict(...)` method in pandas transforms the DataFrame into a dictionary object.
-# The `orient="records"` attribute means that each row of the DataFrame is converted into a dictionary with column-value pairs. The result is a list of dictionaries.
-records = df.to_dict(orient="records")
-
-# ======================================
-# INSERT INTO MONGO
-# ======================================
-print("\n🗑️ Cleaning up the collection... ")
-# The delete_many({}) method deletes all documents that meet the specified filter.
-# The {} argument is an empty filter, meaning there are no conditions; therefore, all documents in the collection are deleted.
-collection.delete_many({})
-
-print("📤 Entering data...")
-# The `insert_many(records)` command inserts all documents contained in the `records` list.
-# Each element of `records` must be a Python dictionary (key: value), which is then converted into a document within MongoDB.
-collection.insert_many(records)
-
-print("✅ ETL completed successfully")
-
-# ======================================
-# BASIC VALIDATION
-# ======================================
-print("\n📊 Quick Check:")
-# Action: count_documents(...) returns the number of documents that meet that condition.
-print("Total documents:", collection.count_documents({}))
-# Filter: {"location": {"$ne": None}} $ne means "not equal". Selects documents where the location field is not null (None).
-print("With location:", collection.count_documents({"location": {"$ne": None}}))
-# Filter: {"category.0": {"$exists": True}} category.0 refers to the first element of the category array. $exists: True means that this element exists.
-# Action: Counts documents where the category array has at least one element.
-# Result: Number of records with non-empty categories.
-print("With categories:", collection.count_documents({"category.0": {"$exists": True}}))
